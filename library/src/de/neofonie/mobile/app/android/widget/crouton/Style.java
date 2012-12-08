@@ -220,7 +220,7 @@ public class Style {
       durationInMilliseconds = 3000;
       heightInPixels = ViewGroup.LayoutParams.WRAP_CONTENT;
       paddingInPixels = 10;
-      backgroundColorResourceId = android.R.color.holo_blue_light;
+      backgroundColorResourceId = holoBlueLight;
       backgroundDrawableResourceId = 0;
       backgroundColorValue = -1;
       isTileEnabled = false;
