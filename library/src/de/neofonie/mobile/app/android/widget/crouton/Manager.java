@@ -184,7 +184,12 @@ final class Manager extends Handler {
       if (params == null) {
         params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
       }
-      crouton.getActivity().addContentView(croutonView, params);
+      final Activity act = crouton.getActivity();
+      if(act != null) {
+          act.addContentView(croutonView, params);
+      } else {
+    	  return;
+      }
     }
     croutonView.startAnimation(crouton.getInAnimation());
     sendMessageDelayed(crouton, Messages.REMOVE_CROUTON, crouton.getStyle().durationInMilliseconds + +crouton.getInAnimation().getDuration());
