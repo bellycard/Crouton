@@ -24,6 +24,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 import android.app.Activity;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
@@ -173,26 +174,29 @@ final class Manager extends Handler {
    *          The {@link Crouton} that should be added.
    */
   private void addCroutonToView(Crouton crouton) {
-    // don't add if it is already showing
-    if (crouton.isShowing()) {
-      return;
-    }
-
-    View croutonView = crouton.getView();
-    if (croutonView.getParent() == null) {
-      ViewGroup.LayoutParams params = croutonView.getLayoutParams();
-      if (params == null) {
-        params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-      }
-      final Activity act = crouton.getActivity();
-      if(act != null) {
-          act.addContentView(croutonView, params);
-      } else {
-    	  return;
-      }
-    }
-    croutonView.startAnimation(crouton.getInAnimation());
-    sendMessageDelayed(crouton, Messages.REMOVE_CROUTON, crouton.getStyle().durationInMilliseconds + +crouton.getInAnimation().getDuration());
+	try {
+	    // don't add if it is already showing
+	    if (crouton.isShowing()) {
+	      return;
+	    }
+	    View croutonView = crouton.getView();
+	    if (croutonView.getParent() == null) {
+	      ViewGroup.LayoutParams params = croutonView.getLayoutParams();
+	      if (params == null) {
+	        params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+	      }
+	      final Activity act = crouton.getActivity();
+	      if(act != null) {
+	          act.addContentView(croutonView, params);
+	      } else {
+	    	  return;
+	      }
+	    }
+	    croutonView.startAnimation(crouton.getInAnimation());
+	    sendMessageDelayed(crouton, Messages.REMOVE_CROUTON, crouton.getStyle().durationInMilliseconds + +crouton.getInAnimation().getDuration());
+	} catch(Exception e) {
+		Log.e(Manager.class.getName(), "Error Showing Crouton");
+	}
   }
 
   /**
