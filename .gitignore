@@ -36,3 +36,10 @@ local.properties
 
 # maven target
 target
+
+
+*.idea
+
+library/build/*
+
+*.iml
